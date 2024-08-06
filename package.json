@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "config": "^3.3.12",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.5.2",
     "nodemon": "^3.1.4",
-    "to-do-app": "file:"
+    "to-do-app": "file:",
+    "uuid": "^10.0.0"
   }
 }
