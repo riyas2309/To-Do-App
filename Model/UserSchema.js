@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: String,
   password: String,
   email: String,
@@ -8,4 +8,4 @@ const UserSchema = mongoose.Schema({
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "task" }],
 });
 
-module.exports = mongoose.Schema("user", UserSchema);
+module.exports = mongoose.model("user", UserSchema);

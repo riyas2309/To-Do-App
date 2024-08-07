@@ -5,4 +5,8 @@ router.get("/", (req, res) => {
   res.send("tasks");
 });
 
+router.get("/create", (req, res) => {
+  res.send("tasks");
+});
+
 module.exports = router;

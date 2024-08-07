@@ -8,6 +8,7 @@ const TasksRoute = require("./Routes/TaskRoutes");
 const { logger } = require("./Middleware/logger"); // Destructure to get logger function
 const DbConnection = require("./Config/Db_Connection");
 const errorHandeller = require("./Middleware/errorHandeller");
+const cookieparser = require("cookie-parser");
 
 // Initialize Express
 const app = express();
@@ -19,7 +20,7 @@ DbConnection();
 app.use(logger); // Use logger middleware correctly
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieparser());
 // Check if PORT is defined
 const PORT = process.env.PORT || 3000;
 
