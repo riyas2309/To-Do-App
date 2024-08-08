@@ -10,7 +10,7 @@ const isloggedin = async (req, res, next) => {
     try {
       const decode = jwt.verify(token, process.env.JWT_HASH);
       req.user = decode;
-      console.log(decode);
+
       next();
     } catch (error) {
       console.log(err);

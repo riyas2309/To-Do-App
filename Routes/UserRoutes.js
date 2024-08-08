@@ -10,6 +10,9 @@ const bcrypt = require("bcrypt");
 router.get("/", (req, res) => {
   res.send("user");
 });
+router.get("/login", (req, res) => {
+  res.send("loginpage");
+});
 //create user
 router.post("/create", async (req, res) => {
   const { username, password, email, phonenumber } = req.body;
@@ -48,15 +51,24 @@ router.post("/create", async (req, res) => {
 router.post("/login", isloggedin, async (req, res) => {
   if (!req.user) {
     const { email, password } = req.body;
-    const user = await UserSchema.findOne({ email });
+    const user = await User.findOne({ email });
     if (user) {
       const verify = await bcrypt.compare(password, user.password);
       if (verify) {
-        gentoken(...User, (password = ""));
+        const userObj = user.toObject();
+        const {
+          password,
+          phonenumber,
+          tasks,
+          username,
+          ...userWithoutPassword
+        } = userObj;
+        const token = gentoken(userWithoutPassword);
+        res.cookie("token", token).send("logedin");
       }
     }
   } else {
-    res.send("logdin");
+    res.redirect("/");
   }
 });
 

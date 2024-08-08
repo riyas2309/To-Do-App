@@ -5,6 +5,6 @@ const errorHandeller = (err, req, res, next) => {
     `${err.name}\t${err.message}\t${req.method}\t${req.url}\t${req.headers.origin}`,
     "errlog.log"
   );
-  res.send(500);
+  res.sendStatus(500);
 };
 module.exports = errorHandeller;

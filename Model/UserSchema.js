@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
   password: String,
   email: String,
   phonenumber: Number,
-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "task" }],
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task", default: [] }],
 });
 
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
