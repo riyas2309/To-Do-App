@@ -6,6 +6,7 @@ const gentoken = require("../Utils/generateTocken");
 const isloggedin = require("../Middleware/isloggedin");
 const UserSchema = require("../Model/UserSchema");
 const bcrypt = require("bcrypt");
+const { login } = require("../Controller/usersController");
 
 router.get("/", (req, res) => {
   res.send("user");
@@ -48,29 +49,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/login", isloggedin, async (req, res) => {
-  if (!req.user) {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (user) {
-      const verify = await bcrypt.compare(password, user.password);
-      if (verify) {
-        const userObj = user.toObject();
-        const {
-          password,
-          phonenumber,
-          tasks,
-          username,
-          ...userWithoutPassword
-        } = userObj;
-        const token = gentoken(userWithoutPassword);
-        res.cookie("token", token).send("logedin");
-      }
-    }
-  } else {
-    res.redirect("/");
-  }
-});
+router.route("/login").post(isloggedin, login);
 
 router.post("/logout", (req, res) => {
   res.cookie("token", "").send("logedout");

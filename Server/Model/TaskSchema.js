@@ -9,6 +9,10 @@ const TaskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Make sure this matches the name of your User model
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // Create and export the Task model
