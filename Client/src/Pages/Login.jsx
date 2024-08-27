@@ -1,10 +1,43 @@
 import React from "react";
 import Navbar from "../Components/Navbar"; // Make sure the path is correct
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Axios from "../Api/Axios";
 
+import toast from "react-hot-toast";
 const Login = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+    console.log(data);
+  };
+  const PostData = async (e) => {
+    e.preventDefault(); // Prevent page reload
+    try {
+      const response = await Axios.post("/users/login", data);
+      console.log(response);
+      if (response.data.error) {
+        // If there's an error from the server, show it and reset the form
+        toast.error(response.data.error);
+        setData({
+          email: "",
+          password: "",
+        });
+      } else {
+        // If successful, show success message and navigate
+        toast.success("login Successful");
+        navigate("/tasks"); // Redirect to login page after successful signup
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      toast.error("An error occurred during signup. Please try again.");
+    }
+  };
   const handleSignUpRedirect = () => {
     navigate("/signup"); // Change '/signup' to the route for the Sign-up page
   };
@@ -13,7 +46,10 @@ const Login = () => {
     <div className="bg-[#ede9e4] h-screen w-screen items-center justify-center">
       <Navbar />
       <div className="flex items-center justify-center mt-[7%]">
-        <form className="flex items-center justify-center w-full">
+        <form
+          className="flex items-center justify-center w-full"
+          onSubmit={PostData}
+        >
           <div className="flex flex-col w-[40%] bg-white px-10 py-10 rounded-3xl shadow-lg items-center">
             <h1 className="text-center justify-center font-bold text-4xl mb-6">
               Log In
@@ -23,12 +59,14 @@ const Login = () => {
               name="email"
               placeholder="Email"
               className="px-3 mb-6 bg-[#e4e4e4] h-10 w-[80%] rounded placeholder-[#000000] font-semibold "
+              onChange={handleChange}
             />
             <input
               type="password"
               name="password"
               placeholder="Password"
               className="px-3 mb-2 bg-[#e4e4e4] h-10 w-[80%] rounded placeholder-[#000000] font-semibold "
+              onChange={handleChange}
             />
             <div className="mb-4 w-[80%] flex justify-start">
               <span

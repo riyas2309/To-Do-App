@@ -1,7 +1,7 @@
 // Package Imports
 const express = require("express");
 const dotenv = require("dotenv").config();
-
+const cors = require("cors");
 // Local Imports
 const UserRoute = require("./Routes/UserRoutes");
 const TasksRoute = require("./Routes/TaskRoutes");
@@ -15,6 +15,12 @@ const app = express();
 
 // Establish DB Connection
 DbConnection();
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Replace with your React app's URL
+    credentials: true, // This allows cookies to be included in requests
+  })
+);
 
 // Middleware to parse JSON and URL-encoded data
 app.use(logger); // Use logger middleware correctly
