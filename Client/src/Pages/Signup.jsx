@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Axios from "../Api/Axios";
 import toast from "react-hot-toast";
+import { useAuth } from "../Contexts/AuthContext";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -12,20 +13,19 @@ const Signup = () => {
     phonenumber: "",
     password: "",
   });
-
+  const { login } = useAuth();
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
+    console.log(data); // Consider removing or reducing logs in production
   };
 
   const PostData = async (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault();
     try {
       const response = await Axios.post("/users/create", data);
 
       if (response.data.error) {
-        // If there's an error from the server, show it and reset the form
-        toast.error(response.data.error);
+        toast.error(response.data.errorMessage); // Corrected the typo here
         setData({
           username: "",
           email: "",
@@ -33,16 +33,15 @@ const Signup = () => {
           password: "",
         });
       } else {
-        // If successful, show success message and navigate
+        login();
         toast.success("Registration Successful");
-        navigate("/login"); // Redirect to login page after successful signup
+        navigate("/tasks");
       }
     } catch (error) {
-      console.error("Error signing up:", error);
-      toast.error("An error occurred during signup. Please try again.");
+      console.error("Error signing up:", error.response.data.errorMessage);
+      toast.error(error.response.data.errorMessage);
     }
   };
-
   return (
     <div className="bg-[#ede9e4] h-screen w-screen">
       <Navbar />

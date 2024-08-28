@@ -3,18 +3,20 @@ import Navbar from "../Components/Navbar"; // Make sure the path is correct
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Axios from "../Api/Axios";
+import { useAuth } from "../Contexts/AuthContext";
 
 import toast from "react-hot-toast";
+
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   };
   const PostData = async (e) => {
     e.preventDefault(); // Prevent page reload
@@ -29,7 +31,9 @@ const Login = () => {
           password: "",
         });
       } else {
+        console.log(response);
         // If successful, show success message and navigate
+        login();
         toast.success("login Successful");
         navigate("/tasks"); // Redirect to login page after successful signup
       }

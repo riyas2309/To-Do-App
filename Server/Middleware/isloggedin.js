@@ -13,7 +13,7 @@ const isloggedin = async (req, res, next) => {
 
       next();
     } catch (error) {
-      console.log(err);
+      console.log(error);
     }
   }
 };

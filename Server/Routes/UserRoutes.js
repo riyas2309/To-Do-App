@@ -8,12 +8,6 @@ const UserSchema = require("../Model/UserSchema");
 const bcrypt = require("bcrypt");
 const { login } = require("../Controller/usersController");
 
-router.get("/", (req, res) => {
-  res.send("user");
-});
-router.get("/login", (req, res) => {
-  res.send("loginpage");
-});
 //create user
 router.post("/create", async (req, res) => {
   const { username, password, email, phonenumber } = req.body;
@@ -38,7 +32,7 @@ router.post("/create", async (req, res) => {
         //setting cokkie
         res.cookie("token", token).status(201).send(user);
       } else {
-        res.status(400).send("User already exists");
+        res.status(400).json({ errorMessage: "User already exists" });
       }
     } else {
       res.status(400).send("All fields are required");
@@ -51,7 +45,7 @@ router.post("/create", async (req, res) => {
 
 router.route("/login").post(isloggedin, login);
 
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   res.cookie("token", "").send("logedout");
 });
 
