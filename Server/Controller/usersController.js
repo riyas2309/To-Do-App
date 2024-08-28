@@ -27,10 +27,10 @@ const login = async (req, res) => {
           const token = gentoken(userWithoutPassword);
           // res.cookie("token", token);
           res.cookie("token", token, {
-            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: false,
             secure: false,
             sameSite: "Lax",
-            maxAge: 24 * 60 * 60 * 1000,
           });
           res.json("Logged in successfully");
         } else {

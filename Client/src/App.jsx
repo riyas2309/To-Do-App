@@ -11,6 +11,7 @@ import Tasks from "./Pages/Tasks";
 import Logout from "./Pages/Logout";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "../src/Contexts/AuthContext";
+import AddTask from "./Pages/AddTask";
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -50,6 +51,7 @@ function App() {
             }
           />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/add" element={<AddTask />} />
         </Routes>
       </Router>
     </>
