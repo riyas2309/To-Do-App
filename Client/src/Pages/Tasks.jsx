@@ -15,17 +15,31 @@ const TodoApp = () => {
       try {
         const gettasks = await Axios.get("/tasks/list");
         setTasks(gettasks.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchTask();
   }, [modalState]);
-
   const toggleTaskCompletion = (index) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task, i) =>
+    setTasks((prevTasks) => {
+      const updatedTasks = prevTasks.map((task, i) =>
         i === index ? { ...task, completed: !task.completed } : task
-      )
-    );
+      );
+      const updatedTask = updatedTasks[index];
+
+      const UpdateDBTask = async () => {
+        try {
+          const updateTask = await Axios.post("/tasks/update", updatedTask);
+          console.log(updateTask);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      UpdateDBTask();
+
+      return updatedTasks;
+    });
   };
 
   const changeModalState = () => {

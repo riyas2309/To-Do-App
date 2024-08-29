@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SortIcon from "@mui/icons-material/Sort";
 
 const TaskList = ({ tasks, onToggleComplete }) => {
-  console.log(tasks);
+  // console.log(tasks);
   return (
     <div className="container w-[80%] bg-white rounded-2xl p-6 mt-5">
       <div className="flex justify-between items-center border-b pb-4 mb-4">

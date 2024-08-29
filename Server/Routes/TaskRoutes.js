@@ -69,4 +69,20 @@ router.put("/completed", isloggedin, async (req, res) => {
     res.send("complete");
   }
 });
+router.post("/update", isloggedin, async (req, res) => {
+  if (!req.user) {
+    res.redirect("/users/login");
+  } else {
+    console.log(req.body);
+    const { _id, task, period, completed } = req.body;
+    const updatedtask = await Tasks.findOneAndUpdate(
+      { _id },
+      { task, period, completed },
+      { new: true, runValidators: true }
+    );
+    console.log(updatedtask);
+
+    res.send("complete");
+  }
+});
 module.exports = router;
