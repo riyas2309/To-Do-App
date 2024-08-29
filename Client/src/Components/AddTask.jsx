@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import Axios from "../Api/Axios";
 
-const AddTask = () => {
+const AddTask = ({ closeModal }) => {
   const [task, setTask] = useState("");
   const [endDate, setEndDate] = useState("");
   const [type, setType] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Task:", task);
     console.log("End Date:", endDate);
     console.log("Type:", type);
-    // Add your task submission logic here
+    const postTask = await Axios.post("/tasks/create", { task, endDate, type });
+    console.log(postTask);
+    closeModal();
   };
 
   return (

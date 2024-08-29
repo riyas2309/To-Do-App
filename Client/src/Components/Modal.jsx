@@ -22,7 +22,7 @@ const Modal = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
         className="p-6 rounded-lg"
       >
-        <AddTask />
+        <AddTask closeModal={onClose} />
       </div>
     </div>
   );

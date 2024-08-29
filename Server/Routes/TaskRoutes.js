@@ -11,6 +11,7 @@ router.get("/list", isloggedin, async (req, res) => {
   } else {
     const { email } = req.user;
     const user = await User.findOne({ email }).populate("tasks");
+    console.log(user.tasks);
     res.send(user.tasks).status(200);
   }
 });
@@ -22,10 +23,15 @@ router.post("/create", isloggedin, async (req, res) => {
     const { email } = req.user;
 
     const user = await User.findOne({ email });
+    const { task, endDate, type } = req.body;
+    const endDated = new Date(endDate);
+    const currentDate = new Date();
+    const diffInMs = endDated - currentDate;
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
 
     const tasks = await Tasks.create({
-      task: "hello this is my first task",
-      period: "5",
+      task: task,
+      period: diffInDays,
       userid: user._id,
     });
     user.tasks.push(tasks._id);

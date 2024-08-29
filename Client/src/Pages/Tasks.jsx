@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import TaskHeader from "../Components/TaskHeader";
 import TaskList from "../Components/TasksList";
 import AddIcon from "@mui/icons-material/Add";
 import Modal from "../Components/Modal";
+import Axios from "../Api/Axios";
 
 const TodoApp = () => {
   const [selectedTab, setSelectedTab] = useState("Daily Tasks");
   const [modalState, setModalState] = useState(false);
-  const [tasks, setTasks] = useState([
-    { name: "wakeup", endTime: "10:00", completed: true },
-    { name: "workout", endTime: "11:00", completed: false },
-    { name: "breakfast", endTime: "12:00", completed: true },
-    { name: "meeting", endTime: "01:00", completed: false },
-    { name: "coding", endTime: "02:00", completed: true },
-  ]);
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    const fetchTask = async () => {
+      try {
+        const gettasks = await Axios.get("/tasks/list");
+        setTasks(gettasks.data);
+      } catch (error) {}
+    };
+    fetchTask();
+  }, [modalState]);
 
   const toggleTaskCompletion = (index) => {
     setTasks((prevTasks) =>

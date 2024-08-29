@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SortIcon from "@mui/icons-material/Sort";
 
 const TaskList = ({ tasks, onToggleComplete }) => {
+  console.log(tasks);
   return (
     <div className="container w-[80%] bg-white rounded-2xl p-6 mt-5">
       <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -29,10 +30,10 @@ const TaskList = ({ tasks, onToggleComplete }) => {
             ) : (
               <CheckBoxOutlineBlankIcon className="text-blue-500 mr-2" />
             )}
-            <span className="text-lg font-semibold">{task.name}</span>
+            <span className="text-lg font-semibold">{task.task}</span>
           </div>
           <div className="flex items-center w-1/2 justify-end">
-            <span className="text-lg font-semibold mr-2">{task.endTime}</span>
+            <span className="text-lg font-semibold mr-2">{task.period}</span>
             <DeleteIcon className="text-red-500 cursor-pointer mr-2" />
             <EditIcon className="text-green-500 cursor-pointer" />
           </div>
