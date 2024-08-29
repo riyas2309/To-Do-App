@@ -1,9 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import AddTask from "./AddTask";
 
-const Modal = ({ onClose }) => {
+const Modal = ({ onClose, taskToEdit }) => {
   const modalRef = useRef();
-
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       onClose();
@@ -22,7 +21,7 @@ const Modal = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
         className="p-6 rounded-lg"
       >
-        <AddTask closeModal={onClose} />
+        <AddTask closeModal={onClose} taskToEdit={taskToEdit} />
       </div>
     </div>
   );

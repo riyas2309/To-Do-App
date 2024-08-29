@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const TaskSchema = new mongoose.Schema({
   task: String,
   enddate: Date,
-  period: String,
+  type: String,
   userid: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Make sure this matches the name of your User model

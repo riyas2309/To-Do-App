@@ -11,7 +11,7 @@ router.get("/list", isloggedin, async (req, res) => {
   } else {
     const { email } = req.user;
     const user = await User.findOne({ email }).populate("tasks");
-    console.log(user.tasks);
+    // console.log(user.tasks);
     res.send(user.tasks).status(200);
   }
 });
@@ -21,17 +21,19 @@ router.post("/create", isloggedin, async (req, res) => {
     res.redirect("/users/login");
   } else {
     const { email } = req.user;
+    console.log(req.body);
 
     const user = await User.findOne({ email });
     const { task, endDate, type } = req.body;
     const endDated = new Date(endDate);
-    const currentDate = new Date();
-    const diffInMs = endDated - currentDate;
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    // const currentDate = new Date();
+    // const diffInMs = endDated - currentDate;
+    // const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
 
     const tasks = await Tasks.create({
       task: task,
-      period: diffInDays,
+      enddate: endDated,
+      type: type,
       userid: user._id,
     });
     user.tasks.push(tasks._id);
@@ -43,9 +45,10 @@ router.put("/delete", isloggedin, async (req, res) => {
   if (!req.user) {
     res.redirect("/users/login");
   } else {
+    // console.log(req.body);
     const { email } = req.user;
     const user = await User.findOne({ email });
-    const task = req.body.task;
+    const task = req.body._id;
     const usertasks = user.tasks;
     if (usertasks.includes(task)) {
       user.tasks = user.tasks.filter((taskid) => taskid.toString() !== task);
@@ -56,28 +59,20 @@ router.put("/delete", isloggedin, async (req, res) => {
     res.send(200);
   }
 });
-router.put("/completed", isloggedin, async (req, res) => {
-  if (!req.user) {
-    res.redirect("/users/login");
-  } else {
-    const { task } = req.body;
-    const tasks = await Tasks.findOne({ _id: task });
-    if (tasks) {
-      tasks.completed = true;
-      await tasks.save();
-    }
-    res.send("complete");
-  }
-});
+
 router.post("/update", isloggedin, async (req, res) => {
   if (!req.user) {
     res.redirect("/users/login");
   } else {
+    const { _id, task, endDate, completed, type } = req.body;
+    console.log(task);
     console.log(req.body);
-    const { _id, task, period, completed } = req.body;
+    const endDated = new Date(endDate || req.body.enddate);
+
+    console.log(endDated);
     const updatedtask = await Tasks.findOneAndUpdate(
       { _id },
-      { task, period, completed },
+      { task, enddate: endDated, completed, type },
       { new: true, runValidators: true }
     );
     console.log(updatedtask);
