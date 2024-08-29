@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SortIcon from "@mui/icons-material/Sort";
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, onToggleComplete }) => {
   return (
     <div className="container w-[80%] bg-white rounded-2xl p-6 mt-5">
       <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -20,7 +20,10 @@ const TaskList = ({ tasks }) => {
           key={index}
           className="flex justify-between items-center py-2 border-b last:border-none"
         >
-          <div className="flex items-center w-1/2">
+          <div
+            className="flex items-center w-1/2 cursor-pointer"
+            onClick={() => onToggleComplete(index)}
+          >
             {task.completed ? (
               <CheckBoxIcon className="text-blue-500 mr-2" />
             ) : (

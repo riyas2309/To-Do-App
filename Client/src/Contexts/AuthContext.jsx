@@ -9,9 +9,8 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const token = Cookies.get("token");
-  console.log(Cookies.get());
+
   useEffect(() => {
-    console.log(token);
     if (token) {
       setIsAuthenticated(true);
     }

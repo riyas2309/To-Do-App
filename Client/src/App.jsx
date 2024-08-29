@@ -11,11 +11,10 @@ import Tasks from "./Pages/Tasks";
 import Logout from "./Pages/Logout";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "../src/Contexts/AuthContext";
-import AddTask from "./Pages/AddTask";
+import AddTask from "./Components/AddTask";
 
 function App() {
   const { isAuthenticated } = useAuth();
-  console.log(isAuthenticated);
 
   return (
     <>
