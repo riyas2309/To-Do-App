@@ -76,7 +76,7 @@ const Login = () => {
               <span
                 className="text-blue-500 hover:text-blue-700 cursor-pointer"
                 onClick={() => {
-                  // Add logic here to handle the forgot password action, e.g., navigate to a reset password page
+                  window.location.href = "/forgotPassword";
                 }}
               >
                 Forgot Password?

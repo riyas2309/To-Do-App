@@ -9,6 +9,7 @@ import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import Tasks from "./Pages/Tasks";
 import Logout from "./Pages/Logout";
+import ForgotPassword from "./Pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "../src/Contexts/AuthContext";
 import AddTask from "./Components/AddTask";
@@ -51,6 +52,16 @@ function App() {
           />
           <Route path="/logout" element={<Logout />} />
           <Route path="/add" element={<AddTask />} />
+          <Route
+            path="/forgotPassword"
+            element={
+              !isAuthenticated ? (
+                <ForgotPassword />
+              ) : (
+                <Navigate to="/tasks" replace />
+              )
+            }
+          />
         </Routes>
       </Router>
     </>
