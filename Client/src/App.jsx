@@ -33,6 +33,12 @@ function App() {
       <Router>
         <Routes>
           <Route
+            path="*"
+            element={
+              !isAuthenticated ? <Login /> : <Navigate to="/tasks" replace />
+            }
+          />
+          <Route
             path="/signup"
             element={
               !isAuthenticated ? <Signup /> : <Navigate to="/tasks" replace />
