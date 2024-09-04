@@ -14,6 +14,7 @@ const cookieparser = require("cookie-parser");
 const app = express();
 
 // Establish DB Connection
+const allowedOrigins = process.env.FRONTEND_URL || "http://localhost:5173";
 DbConnection();
 app.use(
   cors({
