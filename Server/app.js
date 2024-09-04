@@ -18,7 +18,13 @@ const allowedOrigins = process.env.FRONTEND_URL || "http://localhost:5173";
 DbConnection();
 app.use(
   cors({
-    origin: "https://to-do-app-1-2xic.onrender.com/", // Replace with your React app's URL
+    origin:  (origin, callback) => {
+      if (origin && allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    }, // Replace with your React app's URL
     credentials: true, // This allows cookies to be included in requests
   })
 );
